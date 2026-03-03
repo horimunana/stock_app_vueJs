@@ -1,19 +1,15 @@
 <script setup>
-import AppBar from "./pages/AppBar.vue";
-import BottomNavBar from "./pages/BottomNavBar.vue";
+import useToogle from "./stores/ToogleDrawable";
+import Drawable from "./pages/Drawable.vue";
+
+const toogle = useToogle();
 </script>
 
 <template>
   <div class="app">
-    <!-- Header -->
-    <AppBar />
-    <!-- Main Content -->
-    <main class="main">
-      <router-view />
-    </main>
-    <!-- Main Content -->
-    <!-- Bottom Navigation -->
-    <BottomNavBar />
+    <router-view />
+    <!-- Drawable -->
+    <Drawable v-if="toogle.isOpen" />
   </div>
 </template>
 
@@ -22,8 +18,5 @@ import BottomNavBar from "./pages/BottomNavBar.vue";
   display: flex;
   flex-direction: column;
   height: 100dvh;
-}
-.main {
-  flex: 1;
 }
 </style>

@@ -2,7 +2,7 @@
   <nav class="nav-bottom">
     <ul class="nav-list">
       <li>
-        <router-link to="/" class="nav-item">
+        <router-link to="/dashboard" class="nav-item">
           <span class="nav-icon">🏠</span>
           <span>Dashboard</span>
         </router-link>
