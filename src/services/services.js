@@ -21,7 +21,7 @@ export async function loginApi({ username, password }) {
 //SIGN UP METHOD
 export async function signupApi({ username, email, password }) {
   try {
-    const res = await axios.post(`${BASE_URL}/api/users`, {
+    const res = await axios.post(`${BASE_URL}/api/users/`, {
       username,
       email,
       password,
@@ -54,11 +54,12 @@ export async function getCurrentUser() {
     throw error;
   }
 }
-
+// *******************PRODUCTS************************
 //GET ALL PRODUCT METHOD
 export async function getProducts() {
   try {
     const res = await axios.get(`${BASE_URL}/api/produits/`);
+    localStorage.setItem("products", JSON.stringify(res?.data));
     return res.data;
   } catch (error) {
     console.log("Failed to load products", error.response?.data);
@@ -66,6 +67,24 @@ export async function getProducts() {
   }
 }
 
+//POST NEW PRODUCT METHOD
+export async function addNewProduct(productData) {
+  try {
+    const token = localStorage.getItem("token");
+    const res = await axios.post(`${BASE_URL}/api/produits/`, productData, {
+      headers: {
+        Authorization: `Bearer ${token} `,
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    return res.data;
+  } catch (error) {
+    console.log("Failed to add new product", error.response?.data);
+    throw new Error("Failed to add new product");
+  }
+}
+
+// *******************MOUVEMENT************************
 //GET ALL MOUVEMENT METHOD
 export async function getMouvements() {
   try {
@@ -83,6 +102,7 @@ export async function getMouvements() {
   }
 }
 
+// *******************CLIENTS************************
 //GET ALL CLIENTS METHOD
 export async function getClients() {
   try {

@@ -5,7 +5,10 @@ const { data: mouvements, isLoading, isError } = useGetMouvements();
 <template>
   <div id="mouvements" class="page">
     <div class="card">
-      <h2 class="card-title">Derniers mouvements</h2>
+      <div class="container_title">
+        <h2 class="card-title">Derniers mouvements</h2>
+        <router-link to="/newproduct" class="add_prod">➕</router-link>
+      </div>
       <div class="list">
         <div v-if="isLoading">Loading...</div>
         <div v-else-if="isError">Error loading mouvements</div>
@@ -31,3 +34,16 @@ const { data: mouvements, isLoading, isError } = useGetMouvements();
     </div>
   </div>
 </template>
+<style scoped>
+.container_title {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.add_prod {
+  color: aliceblue;
+  list-style: none;
+  text-decoration: none;
+  background: transparent;
+}
+</style>

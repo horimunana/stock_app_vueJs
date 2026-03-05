@@ -8,6 +8,7 @@ import Movements from "./../pages/Layouts/Movements.vue";
 import Login from "./../pages/Auth/Login.vue";
 import Register from "../pages/Auth/Register.vue";
 import NotFound from "./../pages/NotFound.vue";
+import AddNewProduct from "../pages/Layouts/AddNewProduct.vue";
 
 const routes = [
   {
@@ -34,6 +35,11 @@ const routes = [
         path: "mouvement",
         name: "mouvement",
         component: Movements,
+      },
+      {
+        path: "newproduct",
+        name: "addnewproduct",
+        component: AddNewProduct,
       },
     ],
   },
