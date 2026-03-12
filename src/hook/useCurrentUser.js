@@ -4,6 +4,6 @@ import { getCurrentUser } from "../services/services";
 export function useCurrentUser() {
   return useQuery({
     queryKey: ["users"],
-    queryFn: () => getCurrentUser(),
+    queryFn: getCurrentUser,
   });
 }

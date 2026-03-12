@@ -36,13 +36,13 @@ export async function signupApi({ username, email, password }) {
 //GET CURRENT USER METHOD
 export async function getCurrentUser() {
   try {
-    const token = localStorage.getItem("token");
+    // const token = localStorage.getItem("token");
     const res = await axios.get(`${BASE_URL}/api/users/`, {
       headers: {
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${localStorage.getItem("token")} `,
       },
     });
-    return res.data;
+    return res.data.results[0] ?? null;
   } catch (error) {
     console.log("Failed to load user", error.response?.data);
 
@@ -58,7 +58,11 @@ export async function getCurrentUser() {
 //GET ALL PRODUCT METHOD
 export async function getProducts() {
   try {
-    const res = await axios.get(`${BASE_URL}/api/produits/`);
+    const res = await axios.get(`${BASE_URL}/api/produits/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")} `,
+      },
+    });
     localStorage.setItem("products", JSON.stringify(res?.data));
     return res.data;
   } catch (error) {
@@ -106,7 +110,11 @@ export async function getMouvements() {
 //GET ALL CLIENTS METHOD
 export async function getClients() {
   try {
-    const res = await axios.get(`${BASE_URL}/api/clients/`);
+    const res = await axios.get(`${BASE_URL}/api/clients/`, {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem("token")} `,
+      },
+    });
     return res.data;
   } catch (error) {
     console.log("Failed to load clients");

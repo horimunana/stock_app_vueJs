@@ -1,13 +1,18 @@
 <script setup>
+import { computed, watch } from "vue";
 import { ContentLoader } from "vue-content-loader";
 import { useCurrentUser } from "../hook/useCurrentUser";
 import useToogle from "../stores/ToogleDrawable";
-const { data, isLoading, error } = useCurrentUser();
+const { data: user, isLoading: isPending, error } = useCurrentUser();
 
-const user = data?.results || null;
-console.log("user", user);
-console.log("error", error);
+// All variable
 const toogleStore = useToogle();
+
+// const user = computed(() => data?.results[0] ?? null);
+watch(user, (newUser) => {
+  console.log("User data updated:", newUser);
+});
+
 // THIS DOES NOT HAVE PERFOMANCE
 // const props = defineProps({
 //   onOpen: Function,
@@ -28,7 +33,7 @@ function handleOpen() {
 <template>
   <header class="header">
     <!-- LOADING FOR SKELETON -->
-    <div class="header-profilegg" v-if="isLoading">
+    <div class="header-profilegg" v-if="isPending">
       <ContentLoader
         :speed="2"
         :width="40"
@@ -53,7 +58,7 @@ function handleOpen() {
       </ContentLoader> -->
     </div>
 
-    <div class="header-profile" v-if="!isLoading" @click="handleOpen">
+    <div class="header-profile" v-else @click="handleOpen">
       <svg
         v-if="user?.image == null || user?.image == ''"
         xmlns="http://www.w3.org/2000/svg"
@@ -71,8 +76,8 @@ function handleOpen() {
         <path d="M20 21a8 8 0 0 0-16 0" />
       </svg>
 
-      <img :src="user?.image" alt="Profile" />
-      <span>{{ user?.username }}hhjh</span>
+      <img v-else :src="user?.image" alt="Profile" />
+      <span>{{ user?.username }}</span>
     </div>
     <button class="header-menu-btn" aria-label="Menu">🔔</button>
   </header>

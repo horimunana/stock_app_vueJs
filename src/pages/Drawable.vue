@@ -1,11 +1,19 @@
 <script setup>
+import { useRouter } from "vue-router";
 import useToogle from "../stores/ToogleDrawable";
 
 // DECLARE TOOGLE STORE
 const toogleStore = useToogle();
+const router = useRouter();
 
 function handleClose() {
   toogleStore.close();
+}
+
+function logout() {
+  localStorage.removeItem("token");
+  router.push("/auth/login");
+  handleClose();
 }
 
 let listItem = [
@@ -13,16 +21,22 @@ let listItem = [
     name: " Profile",
     icon: "👤",
     path: "/profile",
+    method: () => {
+      router.push("/profile");
+      handleClose();
+    },
   },
   {
     name: "Settings",
     icon: "☸️",
     path: "/settings",
+    method: () => handleClose(),
   },
   {
     name: "Logout",
     icon: "📤",
     path: "/logout",
+    method: logout,
   },
 ];
 
@@ -44,7 +58,7 @@ let listItem = [
     </div>
     <div class="container_setting">
       <!-- NavItem -->
-      <div v-for="item in listItem" @click="handleClose" class="setting">
+      <div v-for="item in listItem" @click="item.method" class="setting">
         <span>
           {{ item.icon }}
         </span>
